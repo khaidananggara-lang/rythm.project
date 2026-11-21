@@ -1074,7 +1074,6 @@ $("lysave").onclick=function(){
   var tx=$("lyta").value.trim();if(!tx||i<0)return;
   var d=/\[\d+:\d+/.test(tx)?{synced:tx,plain:"",man:1}:{synced:"",plain:tx,man:1};
   lyrTok++;lyrSave(tracks[i],d);lyrShow(d,"Lirik buatan kamu");$("lyedit").hidden=true;$("lyta").value="";
-};
 /* ===== favorit, playlist, edit info, urutan ===== */
 var META={fav:{},pls:[],ed:{}},view="all",sortMode="old";
 function loadMeta(){try{var m=JSON.parse(localStorage.getItem(K("putar-meta"))||"null");if(m){META.fav=m.fav||{};META.pls=m.pls||[];META.ed=m.ed||{}}}catch(e){}}
