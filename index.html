@@ -1458,7 +1458,7 @@ $("aform").onsubmit=function(e){
   var rem=$("rem").checked;
   if(mode==="up"){
     if(USERS[key]){err.textContent="Nama pengguna sudah dipakai.";return}
-    if(pw!==$("pw2").value){err.textContent="Kata sandi tidak sama.";return}
+    if(pw!==$("pw2").value){err.textContent="Kata sandi tidak sama.";return;}
     var salt=rnd(),first=!Object.keys(USERS).length;
     hashPw(pw,salt).then(function(h){
       USERS[key]={name:n,salt:salt,hash:h,db:first?"putar":"putar-"+key,legacy:first};
@@ -1466,8 +1466,8 @@ $("aform").onsubmit=function(e){
     });
   }else{
     var u=USERS[key];
-    if(!u){err.textContent="Akun belum ada. Ketuk Daftar untuk membuatnya.";return}
-    hashPw(pw,u.salt).then(function(h){if(h!==u.hash){err.textContent="Kata sandi salah.";return;}enter(key,rem)});
+    if(!u){err.textContent="Akun belum ada. Ketuk Daftar untuk membuatnya.";return;}
+    hashPw(pw,u.salt).then(function(h){if(h!==u.hash){err.textContent="Kata sandi salah.";return;}enter(key,rem))});
   }
 };
 $("logout").onclick=function(){
