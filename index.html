@@ -1475,14 +1475,14 @@ $("logout").onclick=function(){
   try{localStorage.removeItem("putar-sess");sessionStorage.removeItem("putar-sess")}catch(e){}
   location.reload();
 };
-(function boot(){
+function boot(){
   var sk=null;try{sk=localStorage.getItem("putar-sess")||sessionStorage.getItem("putar-sess")}catch(e){}
   if(sk&&USERS[sk]){enter(sk,null);return}
   if(!Object.keys(USERS).length)setMode("up");
   $("welcome").hidden=false;
   $("wgo").onclick=function(){$("welcome").hidden=true;$("auth").hidden=false;$("un").focus()};
   $("wgo").focus();
-})();
+}boot();
 </script>
 </body>
 </html>
