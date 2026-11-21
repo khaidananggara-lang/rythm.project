@@ -389,7 +389,7 @@ html[data-theme="light"] .karaoke{background:linear-gradient(rgba(5,10,26,.65),r
     <button class="go" id="wgo" type="button">Ayo login! <span class="arr" aria-hidden="true">→</span></button>
   </div>
 </div>
-<div class="auth" id="auth" >
+<div class="auth" id="auth" hidden>
   <form class="acard" id="aform" autocomplete="on">
     <svg class="logo" viewBox="0 0 1930 1930" role="img" aria-label="Logo RYTHM"><defs><linearGradient id="lg" x1="0.17" y1="0.12" x2="0.92" y2="0.9"><stop offset="0" stop-color="#000"/><stop offset="1" stop-color="#2f1fb8"/></linearGradient></defs><circle cx="965" cy="965" r="897" fill="url(#lg)"/><g fill="#fff"><path d="M417 785H656V1358H417L339 1071Z"/><rect x="785" y="785" width="143" height="573"/><rect x="1003" y="785" width="143" height="573"/><path d="M1275 785H1514L1591 1071L1514 1358H1275Z"/></g></svg>
     <h2>RYTHM</h2>
@@ -1354,7 +1354,7 @@ function bkImport(f){
         (pl.s||[]).forEach(function(o){var n=idMap[o];if(n!=null&&mine.s.indexOf(n)<0)mine.s.push(n)});
       });
       Object.keys(mm.ed||{}).forEach(function(o){if(fresh[o]&&idMap[o]!=null)META.ed[idMap[o]]=mm.ed[o]});
-     w saveMeta();savePlib();
+      saveMeta();savePlib();
       var st=m.set;
       if(st){
         ["f","b","bg","bta","cta","dim","theme"].forEach(function(k){if(typeof st[k]!=="undefined")S[k]=st[k]});
