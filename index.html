@@ -1354,7 +1354,7 @@ function bkImport(f){
         (pl.s||[]).forEach(function(o){var n=idMap[o];if(n!=null&&mine.s.indexOf(n)<0)mine.s.push(n)});
       });
       Object.keys(mm.ed||{}).forEach(function(o){if(fresh[o]&&idMap[o]!=null)META.ed[idMap[o]]=mm.ed[o]});
-      saveMeta();savePlib();
+     w saveMeta();savePlib();
       var st=m.set;
       if(st){
         ["f","b","bg","bta","cta","dim","theme"].forEach(function(k){if(typeof st[k]!=="undefined")S[k]=st[k]});
@@ -1434,4 +1434,56 @@ Array.prototype.forEach.call(document.querySelectorAll(".eye"),function(b){
 function start(){
   DBN=cur.db;$("pname").textContent=cur.name;$("avt").textContent=cur.name.charAt(0).toUpperCase();$("tabbar").hidden=false;tab("music");$("auth").hidden=true;document.querySelector("main").hidden=false;
   try{var v=localStorage.getItem(K("putar-vol"));if(v!==null){vol.value=v;setVol(+v)}}catch(e){}
-  try{lyrOpen=localStorage.getItem(K("
+  try{lyrOpen=localStorage.getItem(K("putar-prem"))==="1";adm=localStorage.getItem(K("putar-adm"))==="1"}catch(e){}
+  loadSet();apply(false);srLoad();lyLoad();eqLoad();qBadge();
+  loadMeta();loadExtra();drawChips();
+  vInit();
+  pInit();
+  pimgLoad();
+  dbDo("readonly",function(s){return s.getAll()}).then(function(rs){
+    (rs||[]).forEach(function(r){tracks.push(mk(r))});
+    applyMeta();sortTracks();
+    if(tracks.length)load(0,false);
+  }).catch(function(){}).then(render);
+}
+function enter(key,remember){
+  cur=Object.assign({key:key},USERS[key]);
+  try{if(remember!==null){localStorage.removeItem("putar-sess");sessionStorage.removeItem("putar-sess");(remember?localStorage:sessionStorage).setItem("putar-sess",key)}}catch(e){}
+  start();
+}
+$("aform").onsubmit=function(e){
+  e.preventDefault();
+  var n=$("un").value.trim(),key=n.toLowerCase(),pw=$("pw").value,err=$("aerr");err.textContent="";
+  if(!/^[\w.\-]{3,30}$/.test(n)){err.textContent="Nama pengguna 3–30 karakter: huruf, angka, titik, garis bawah, atau tanda minus.";return}
+  if(pw.length<4){err.textContent="Kata sandi minimal 4 karakter.";return}
+  var rem=$("rem").checked;
+  if(mode==="up"){
+    if(USERS[key]){err.textContent="Nama pengguna sudah dipakai.";return}
+    if(pw!==$("pw2").value){err.textContent="Kata sandi tidak sama.";return}
+    var salt=rnd(),first=!Object.keys(USERS).length;
+    hashPw(pw,salt).then(function(h){
+      USERS[key]={name:n,salt:salt,hash:h,db:first?"putar":"putar-"+key,legacy:first};
+      saveUsers();enter(key,rem);
+    });
+  }else{
+    var u=USERS[key];
+    if(!u){err.textContent="Akun belum ada. Ketuk Daftar untuk membuatnya.";return}
+    hashPw(pw,u.salt).then(function(h){if(h!==u.hash){err.textContent="Kata sandi salah.";return}enter(key,rem)});
+  }
+};
+$("logout").onclick=function(){
+  a.pause();
+  try{localStorage.removeItem("putar-sess");sessionStorage.removeItem("putar-sess")}catch(e){}
+  location.reload();
+};
+(function boot(){
+  var sk=null;try{sk=localStorage.getItem("putar-sess")||sessionStorage.getItem("putar-sess")}catch(e){}
+  if(sk&&USERS[sk]){enter(sk,null);return}
+  if(!Object.keys(USERS).length)setMode("up");
+  $("welcome").hidden=false;
+  $("wgo").onclick=function(){$("welcome").hidden=true;$("auth").hidden=false;$("un").focus()};
+  $("wgo").focus();
+})();
+</script>
+</body>
+</html>
