@@ -1467,7 +1467,7 @@ $("aform").onsubmit=function(e){
   }else{
     var u=USERS[key];
     if(!u){err.textContent="Akun belum ada. Ketuk Daftar untuk membuatnya.";return;}
-    hashPw(pw,u.salt).then(function(h){if(h!==u.hash){err.textContent="Kata sandi salah.";return;}enter(key,rem)});
+    hashPw(pw,u.salt).then(function(h){if(h!==u.hash){err.textContent="Kata sandi salah.";return;}enter(key,rem);}});
   }
 };
 $("logout").onclick=function(){
