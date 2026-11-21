@@ -1476,20 +1476,39 @@ $("aform").onsubmit=function(e){
 };
   }
 };
+$("aform").onsubmit=function(e){
+  e.preventDefault();
+  var n=$("un").value.trim(),key=n.toLowerCase(),pw=$("pw").value,err=$("aerr");err.textContent="";
+  if(!/^[\w.\-]{3,30}$/.test(n)){err.textContent="Nama pengguna 3–30 karakter: huruf, angka, titik, garis bawah, atau tanda minus.";return}
+  if(pw.length<4){err.textContent="Kata sandi minimal 4 karakter.";return}
+  var rem=$("rem").checked;
+  if(mode==="up"){
+    if(USERS[key]){err.textContent="Nama pengguna sudah dipakai.";return}
+    if(pw!==$("pw2").value){err.textContent="Kata sandi tidak sama.";return}
+    var salt=rnd(),first=!Object.keys(USERS).length;
+    hashPw(pw,salt).then(function(h){
+      USERS[key]={name:n,salt:salt,hash:h,db:first?"putar":"putar-"+key,legacy:first};
+      saveUsers();enter(key,rem);
+    });
+  }else{
+    var u=USERS[key];
+    if(!u){err.textContent="Akun belum ada. Ketuk Daftar untuk membuatnya.";return}
+    hashPw(pw,u.salt).then(function(h){if(h!==u.hash){err.textContent="Kata sandi salah.";return}enter(key,rem)});
+  }
+};
 $("logout").onclick=function(){
   a.pause();
   try{localStorage.removeItem("putar-sess");sessionStorage.removeItem("putar-sess")}catch(e){}
   location.reload();
 };
-function boot(){
+(function boot(){
   var sk=null;try{sk=localStorage.getItem("putar-sess")||sessionStorage.getItem("putar-sess")}catch(e){}
   if(sk&&USERS[sk]){enter(sk,null);return}
   if(!Object.keys(USERS).length)setMode("up");
   $("welcome").hidden=false;
   $("wgo").onclick=function(){$("welcome").hidden=true;$("auth").hidden=false;$("un").focus()};
   $("wgo").focus();
-}
-  boot();
+})();
 </script>
 </body>
 </html>
