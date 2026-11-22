@@ -1,5 +1,32 @@
-"icons": [
-  { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
-  { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
-  { "src": "icon-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
-]
+{
+  "id": "./",
+  "name": "RYTHM",
+  "short_name": "RYTHM",
+  "description": "Dengerin lagu pakai fitur unik, cuma di sini!",
+  "lang": "id",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#000000",
+  "theme_color": "#1c1230",
+  "categories": ["music", "entertainment"],
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
